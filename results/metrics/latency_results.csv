@@ -1,0 +1,3 @@
+model_name,method_name,device,steps,guidance_scale,width,height,num_prompts,warmup_runs,total_time_sec,avg_latency_sec,min_latency_sec,max_latency_sec,throughput_img_per_sec,peak_memory_mb
+sd15_test,sd15,mps:0,2,7.5,512,512,1,1,90.452509,90.452347,90.452347,90.452347,0.011056,0.0
+sd15_test,sd15_test,mps:0,2,7.5,512,512,1,1,115.393726,115.393707,115.393707,115.393707,0.008666,0.0
