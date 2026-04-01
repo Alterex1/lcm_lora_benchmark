@@ -1,4 +1,5 @@
 import subprocess
+import sys
 
 MODELS = [
     "sd15_lcm",
@@ -10,13 +11,13 @@ MODELS = [
 
 STEPS = [1, 2, 4, 8]
 
-PROMPT_FILE = "prompts/prompts.txt"
+PROMPT_FILE = "prompts/sample_prompts.txt"
 MAX_PROMPTS = 10
 
 
 def run_benchmark(model, steps):
     cmd = [
-        "python",
+        sys.executable,
         "scripts/benchmark_latency.py",
         "--model", model,
         "--steps", str(steps),

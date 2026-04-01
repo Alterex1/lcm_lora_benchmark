@@ -9,7 +9,7 @@ import torch
 
 # Assumes your team creates this file.
 # It should return a ready-to-run Diffusers pipeline on the correct device.
-from sample_model_loader import load_pipeline
+from model_loader import load_pipeline
 
 
 def load_prompts(prompt_file: str, max_prompts: int | None = None) -> List[str]:
@@ -45,23 +45,24 @@ def get_device() -> str:
 
 
 def synchronize_if_needed(device: str) -> None:
-    if device == "cuda":
+    if device.startswith("cuda"):
         torch.cuda.synchronize()
 
 
 def reset_peak_memory_if_needed(device: str) -> None:
-    if device == "cuda":
+    if device.startswith("cuda"):
         torch.cuda.reset_peak_memory_stats()
 
 
 def get_peak_memory_mb(device: str) -> float:
-    if device == "cuda":
+    if device.startswith("cuda"):
         return torch.cuda.max_memory_allocated() / (1024 ** 2)
     return 0.0
 
 
 def infer_resolution(model_name: str) -> int:
-    # Simple default guesses; adjust if your team standardizes differently.
+    if model_name == "sdxl_turbo":
+        return 512
     if "sdxl" in model_name:
         return 1024
     return 512
@@ -188,7 +189,7 @@ def parse_args():
         "--model",
         type=str,
         required=True,
-        choices=["sd15_test"],
+        choices=["sd15_lcm", "sdxl_lcm", "ddim_sd15", "ddim_sdxl", "sdxl_turbo"],
         help="Which pipeline to benchmark.",
     )
     parser.add_argument(
@@ -261,9 +262,9 @@ def parse_args():
 
 
 def get_default_guidance_scale(model_name: str) -> float:
-    # These are starter defaults only.
-    # Your team should standardize these and document them.
-    if model_name in {"sd15_lcm", "sdxl_lcm", "sdxl_turbo"}:
+    if model_name in {"sd15_lcm", "sdxl_lcm"}:
+        return 1.0
+    if model_name == "sdxl_turbo":
         return 0.0
     if model_name in {"ddim_sd15", "ddim_sdxl"}:
         return 7.5
