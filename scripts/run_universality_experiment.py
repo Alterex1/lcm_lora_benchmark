@@ -33,6 +33,16 @@ PROMPTS = [
     "a robot cooking dinner in a kitchen",
 ]
 
+# Short two-line aliases used as row labels in the assembled grid, so
+# matplotlib doesn't truncate the full prompts at the figure edge.
+PROMPT_LABELS = [
+    "futuristic city\nat sunset",
+    "golden retriever\nin snow",
+    "dragon flying\nover mountains",
+    "cabin in\nsnowy forest",
+    "robot cooking\nin kitchen",
+]
+
 OUT_BASE = Path("results/images")
 OUT_FIG = Path("results/figures/universality_grid.png")
 OUT_FIG.parent.mkdir(parents=True, exist_ok=True)
@@ -103,8 +113,7 @@ def build_grid():
             if row == 0:
                 ax.set_title(label, fontsize=9)
             if col == 0:
-                short = PROMPTS[row].split(",")[0][:24]
-                ax.set_ylabel(short, fontsize=9, rotation=0,
+                ax.set_ylabel(PROMPT_LABELS[row], fontsize=9, rotation=0,
                               ha="right", va="center", labelpad=40)
 
     fig.tight_layout()
