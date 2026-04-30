@@ -1,0 +1,41 @@
+# LCM-LoRA Benchmarking Project — Python dependencies
+#
+# IMPORTANT: install torch FIRST with the correct CUDA version for your
+# system, then install the rest. The plain `pip install -r requirements.txt`
+# may fall back to a CPU-only torch wheel.
+#
+#   # CUDA 12.x (most modern GPUs)
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+#
+#   # CUDA 11.8 (older HPC modules)
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+#
+#   # CPU-only (FID-only on HPC nodes without GPU)
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+#
+#   pip install -r requirements.txt
+
+# Core diffusion stack
+torch>=2.1
+torchvision>=0.16
+diffusers>=0.27
+transformers>=4.40
+accelerate>=0.30
+safetensors>=0.4
+peft>=0.10
+
+# Image and numerics
+pillow>=10.0
+numpy>=1.24
+scipy>=1.11
+
+# Data acquisition
+datasets>=2.18
+requests>=2.31
+
+# Plotting and tabular data
+matplotlib>=3.7
+pandas>=2.0
+
+# Misc
+tqdm>=4.65
