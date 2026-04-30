@@ -99,7 +99,7 @@ def plot_fid(df):
             label=model, **MODEL_STYLE[model],
         )
     ax.set_xlabel("Inference steps")
-    ax.set_ylabel("FID vs. CIFAR-10 reference (lower is better)")
+    ax.set_ylabel("FID vs. COCO reference (lower is better)")
     ax.set_title("FID vs. inference steps")
     ax.set_xticks([1, 2, 4, 8])
     ax.grid(True, linestyle=":", alpha=0.6)
