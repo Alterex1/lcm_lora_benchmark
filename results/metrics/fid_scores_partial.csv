@@ -1,0 +1,8 @@
+model_name,steps,num_generated,num_reference,fid_score
+ddim_sd15,1,50,500,554.0493
+ddim_sd15,2,50,500,451.586
+ddim_sd15,4,50,500,275.4131
+ddim_sd15,8,50,500,251.4046
+ddim_sdxl,1,50,500,498.7796
+ddim_sdxl,2,50,500,467.0928
+ddim_sdxl,4,50,500,346.5757

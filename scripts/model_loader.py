@@ -72,6 +72,31 @@ def load_pipeline(model_name: str):
             **turbo_kwargs,
         )
 
+    elif model_name == "sdxl_styled":
+        print("Loading SDXL + style LoRA (DDIM, no LCM acceleration)...")
+        pipe = DiffusionPipeline.from_pretrained(
+            "stabilityai/stable-diffusion-xl-base-1.0",
+            **pretrained_kwargs,
+        )
+        pipe.scheduler = DDIMScheduler.from_config(pipe.scheduler.config)
+        pipe.load_lora_weights("nerijs/pixel-art-xl", adapter_name="style")
+        pipe.set_adapters(["style"], adapter_weights=[1.0])
+
+    elif model_name == "sdxl_styled_lcm":
+        print("Loading SDXL + style LoRA + LCM-LoRA (universality test)...")
+        pipe = DiffusionPipeline.from_pretrained(
+            "stabilityai/stable-diffusion-xl-base-1.0",
+            **pretrained_kwargs,
+        )
+        pipe.scheduler = LCMScheduler.from_config(pipe.scheduler.config)
+        pipe.load_lora_weights(
+            "latent-consistency/lcm-lora-sdxl", adapter_name="lcm",
+        )
+        pipe.load_lora_weights(
+            "nerijs/pixel-art-xl", adapter_name="style",
+        )
+        pipe.set_adapters(["lcm", "style"], adapter_weights=[1.0, 0.8])
+
     else:
         raise ValueError(f"Unknown model name: {model_name}")
 
